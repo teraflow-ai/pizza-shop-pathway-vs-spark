@@ -4,6 +4,15 @@ Code compliment to the blog post on this topic.
 
 Infra and generated data used from https://github.com/startreedata/pizza-shop-demo.
 
+## Setup Python with Pyspark and Pathway
+
+```bash
+python -m venv .venv
+source venv/bin/activate
+export PATHWAY_KEY="your pathway api key"
+pip install --extra-index-url https://packages.pathway.com/$PATHWAY_KEY -r requirements.txt
+```
+
 ## Spin Up Infra
 
 **X86**:
@@ -17,6 +26,7 @@ docker-compose \
 ```
 
 **Arm64**:
+
 ```bash
 docker-compose \
   -f docker-compose-base.yml \
