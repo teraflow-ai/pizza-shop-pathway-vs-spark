@@ -6,6 +6,8 @@ Infra and generated data used from https://github.com/startreedata/pizza-shop-de
 
 ## Spin Up Infra
 
+**X86**:
+
 ```bash
 docker-compose \
   -f docker-compose-base.yml \
@@ -14,6 +16,7 @@ docker-compose \
   up
 ```
 
+**Arm64**:
 ```bash
 docker-compose \
   -f docker-compose-base.yml \
