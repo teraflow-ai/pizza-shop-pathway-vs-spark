@@ -64,7 +64,7 @@ def process_orders_stream(orders_stream: DataFrame) -> DataFrame:
         )
     )
 
-    df_orders_process = df_orders.select(
+    df_orders_processed = df_orders.select(
         "*", (F.explode("items")).alias("items_unnest")
     ).select(
         F.col("createdAt").alias("ts"),
@@ -76,7 +76,7 @@ def process_orders_stream(orders_stream: DataFrame) -> DataFrame:
         F.col("items_unnest.quantity"),
     )
 
-    return df_orders_process
+    return df_orders_processed
 
 
 def get_num_pizzas_sold_by_type(enriched_orders_df: DataFrame) -> DataFrame:
