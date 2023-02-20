@@ -112,8 +112,8 @@ def main():
     most_valuable_customers = calc_most_valuable_customers_stats(enriched_orders_df)
 
     num_pizzas_sold_by_type_query = (
-        most_valuable_customers.coalesce(1)
-        .writeStream.outputMode("complete")
+        enriched_orders_df.coalesce(1)
+        .writeStream.outputMode("append")
         .format("console")
         .option("truncate", "false")
         .start()
