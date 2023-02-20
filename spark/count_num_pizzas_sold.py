@@ -27,7 +27,7 @@ def read_from_kafka(spark: SparkSession) -> DataFrame:
     return data
 
 
-def enrich_orders_stream(orders_stream: DataFrame) -> DataFrame:
+def process_orders_stream(orders_stream: DataFrame) -> DataFrame:
     schema = StructType(
         [
             StructField("createdAt", TimestampType(), False),
@@ -95,7 +95,7 @@ def main():
 
     orders_stream = read_from_kafka(spark)
 
-    processed_orders_df = enrich_orders_stream(orders_stream)
+    processed_orders_df = process_orders_stream(orders_stream)
 
     num_pizzas_sold_by_type = get_num_pizzas_sold_by_type(processed_orders_df)
 

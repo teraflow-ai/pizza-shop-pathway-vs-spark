@@ -21,7 +21,7 @@ def read_from_kafka():
     return raw_data
 
 
-def enrich_orders_stream(orders_stream):
+def process_orders_stream(orders_stream):
     # t = orders_stream.select(
     #     createdAt=pw.this.data.createdAt,
     # )
@@ -32,14 +32,14 @@ def enrich_orders_stream(orders_stream):
 
 def main():
     orders_stream = read_from_kafka()
-    enriched_orders_df = enrich_orders_stream(orders_stream)
+    processed_orders_df = process_orders_stream(orders_stream)
 
     # t = raw_data.select(price=pw.apply_with_type(float, float, raw_data.price))
     # t = t.reduce(sum=pw.reducers.sum(t.price))
     # pw.kafka.write(
     #     enriched_orders_df, RDKAFKA_SETTINGS, topic_name="orders-total", format="json"
     # )
-    pw.csv.write(enriched_orders_df, filename="test.csv")
+    pw.csv.write(processed_orders_df, filename="test.csv")
     pw.run()
 
 
