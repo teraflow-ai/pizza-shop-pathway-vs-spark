@@ -13,28 +13,14 @@ export PATHWAY_KEY="your pathway api key"
 pip install --extra-index-url https://packages.pathway.com/$PATHWAY_KEY -r requirements.txt
 ```
 
-## Spin Up Infra
-
-**X86**:
+## Spin Up Infrastructure
 
 ```bash
 docker-compose \
   -f docker-compose-base.yml \
-  -f docker-compose-pinot.yml \
   -f docker-compose-dashboard-enriched-quarkus.yml \
   up
 ```
-
-**Arm64**:
-
-```bash
-docker-compose \
-  -f docker-compose-base.yml \
-  -f docker-compose-pinot-m1.yml \
-  -f docker-compose-dashboard-enriched-quarkus.yml \
-  up
-```
-
 ## Run Spark Analysis
 
 ### Customer Stats
