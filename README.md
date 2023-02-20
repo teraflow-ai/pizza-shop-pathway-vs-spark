@@ -19,7 +19,7 @@ pip install --extra-index-url https://packages.pathway.com/$PATHWAY_KEY -r requi
 docker-compose \
   -f docker-compose-base.yml \
   -f docker-compose-dashboard-enriched-quarkus.yml \
-  up
+  up -d
 ```
 ## Run Spark Analysis
 
