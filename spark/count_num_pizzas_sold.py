@@ -64,7 +64,7 @@ def enrich_orders_stream(orders_stream: DataFrame) -> DataFrame:
         )
     )
 
-    df_orders_enriched = df_orders.select(
+    df_orders_process = df_orders.select(
         "*", (F.explode("items")).alias("items_unnest")
     ).select(
         F.col("createdAt").alias("ts"),
@@ -76,7 +76,7 @@ def enrich_orders_stream(orders_stream: DataFrame) -> DataFrame:
         F.col("items_unnest.quantity"),
     )
 
-    return df_orders_enriched
+    return df_orders_process
 
 
 def get_num_pizzas_sold_by_type(enriched_orders_df: DataFrame) -> DataFrame:
@@ -95,9 +95,9 @@ def main():
 
     orders_stream = read_from_kafka(spark)
 
-    enriched_orders_df = enrich_orders_stream(orders_stream)
+    processed_orders_df = enrich_orders_stream(orders_stream)
 
-    num_pizzas_sold_by_type = get_num_pizzas_sold_by_type(enriched_orders_df)
+    num_pizzas_sold_by_type = get_num_pizzas_sold_by_type(processed_orders_df)
 
     num_pizzas_sold_by_type_query = (
         num_pizzas_sold_by_type.coalesce(1)
