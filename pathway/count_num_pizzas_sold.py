@@ -26,10 +26,11 @@ def read_from_kafka():
 def process_orders_data(orders_data: str):
     data_parsed = json.loads(orders_data)
     created_at = datetime.strptime(data_parsed["createdAt"], '%Y-%m-%dT%H:%M:%S.%f')
+    created_at = str(data_parsed["createdAt"])
     id_ = str(data_parsed["id"])
     price = float(data_parsed["price"])
     user_id = int(data_parsed["userId"])
-    items = list(data_parsed["items"])
+    items = str(data_parsed["items"])
     return (created_at, id_, price, user_id, items)
 
 
@@ -39,11 +40,6 @@ def main():
         processed=pw.apply(process_orders_data, orders_stream.data)
     )
 
-    # t = raw_data.select(price=pw.apply_with_type(float, float, raw_data.price))
-    # t = t.reduce(sum=pw.reducers.sum(t.price))
-    # pw.kafka.write(
-    #     enriched_orders_df, RDKAFKA_SETTINGS, topic_name="orders-total", format="json"
-    # )
     pw.csv.write(processed_orders_df, filename="test.csv")
     pw.run()
 
