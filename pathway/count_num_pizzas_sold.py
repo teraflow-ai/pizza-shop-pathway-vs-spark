@@ -1,6 +1,7 @@
 import pathway as pw
 from datetime import datetime
 import json
+from pathway import Table
 from pathway.stdlib.utils.col import unpack_col
 from pathway.stdlib.utils.col import flatten_column
 
@@ -38,18 +39,20 @@ def process_orders_data(orders_data: str):
 
 def main():
     orders_stream = read_from_kafka()
-    processed_orders_raw = orders_stream.select(
-        processed=pw.apply(process_orders_raw, pw.this.data)
+    processed_orders_raw: Table = orders_stream.select(
+        processed=pw.apply(process_orders_data, pw.this.data)
     )
-    processed_orders_raw = unpack_col(
+    processed_orders: Table = unpack_col(
         processed_orders_raw.processed, "createdAt", "id_", "price", "userId", "items"
     )
-    processed_orders_raw.join(flatten_column(processed_orders_df.items))
-)
-    processed_orders_df  = flatten_column(processed_orders_df.items)
+    flattened_items = flatten_column(processed_orders.items)
 
-    pw.csv.write(processed_orders_df, filename="test.csv")
-    pw.run()
+    # processed_orders_flattened: Table = processed_orders.join(
+    #     flattened_items, processed_orders.id == flattened_items.origin_id
+    # )
+
+    pw.csv.write(processed_orders_flattened, filename="test.csv")
+    pw.run(debug=True)
 
 
 if __name__ == "__main__":
