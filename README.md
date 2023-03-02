@@ -1,4 +1,4 @@
-# Pizza Shop - Pathway vs Spark
+# Pizza Shop 🍕 - Pathway vs Spark
 
 Code compliment to the blog post on this topic.
 
