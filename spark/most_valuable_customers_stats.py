@@ -1,16 +1,7 @@
-from pyspark.sql import SparkSession
-
 import pyspark.sql.functions as F
 from pyspark.sql import DataFrame, SparkSession
-from pyspark.sql.types import (
-    ArrayType,
-    FloatType,
-    IntegerType,
-    StringType,
-    StructField,
-    StructType,
-    TimestampType,
-)
+from pyspark.sql.types import (ArrayType, FloatType, IntegerType, StringType,
+                               StructField, StructType, TimestampType)
 
 TOPIC = "orders"
 BOOTSTRAP_SERVER = "localhost:29092"
